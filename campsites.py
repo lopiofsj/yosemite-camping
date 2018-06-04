@@ -11,10 +11,10 @@ from bs4 import BeautifulSoup
 # Hardcoded list of campgrounds I'm willing to sleep at
 PARKS = {
     '70925': 'UPPER PINES',
-    '70928': 'LOWER PINES',
+    '70926': 'TUOLOMNE MEADOWS',
     '70927': 'NORTH PINES',
+    '70928': 'LOWER PINES',
     '73635': 'STANISLAUS',
-    '70926': 'TUOLOMNE MEADOWS'
 }
 
 # Sets the search location to yosemite
@@ -101,11 +101,15 @@ def getSiteList(html):
 def sendRequest(payload):
     with requests.Session() as s:
         
-        s.get(BASE_URL + UNIF_RESULTS, verify=False) # Sets session cookie
-        s.post(BASE_URL + UNIF_SEARCH, LOCATION_PAYLOAD, verify=False) # Sets location to yosemite
-        s.post(BASE_URL + UNIF_SEARCH, CAMPING_PAYLOAD, verify=False) # Sets search type to camping
+        # Sets session cookie
+        s.get(BASE_URL + UNIF_RESULTS, verify=True)
+        # Sets location to yosemite
+        s.post(BASE_URL + UNIF_SEARCH, LOCATION_PAYLOAD, verify=True)
+        # Sets search type to camping
+        s.post(BASE_URL + UNIF_SEARCH, CAMPING_PAYLOAD, verify=True)
 
-        resp = s.post(BASE_URL + UNIF_SEARCH, payload, verify=False) # Runs search on specified dates
+        # Runs search on specified dates
+        resp = s.post(BASE_URL + UNIF_SEARCH, payload, verify=True)
         if (resp.status_code != 200):
             raise Exception("failedRequest","ERROR, %d code received from %s".format(resp.status_code, BASE_URL + SEARCH_PATH))
         else:
@@ -130,4 +134,5 @@ if __name__ == "__main__":
                 .format(
                         urllib.quote_plus(formatDate(arg_dict['start_date'])),
                         urllib.quote_plus(formatDate(arg_dict['end_date'])))
-
+    else:
+        print('Nothing Found')
