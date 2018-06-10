@@ -3,7 +3,6 @@ import argparse
 import copy
 import requests
 
-import urllib
 from urlparse import parse_qs
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
@@ -105,9 +104,10 @@ def getSiteList(html):
                 get_params = parse_qs(get_query)
                 siteId = get_params['parkId']
                 if siteId and siteId[0] in PARKS:
-                    msg = "%s, Booking Url: %s"
-                    found_url = BASE_URL + get_url
-                    results.append(msg % (PARKS[siteId[0]], found_url))
+                    # msg = "{], Booking Url: {]"
+                    # results.append(msg.format(PARKS[siteId[0]],
+                    #                           BASE_URL + get_url))
+                    results.append(PARKS[siteId[0]])
     return results
 
 
@@ -149,10 +149,12 @@ if __name__ == "__main__":
     sites = findCampSites(arg_dict)
     if sites:
         for site in sites:
-            print site + \
-                "&arrivalDate={}&departureDate={}" \
-                .format(
-                        urllib.quote_plus(formatDate(arg_dict['start_date'])),
-                        urllib.quote_plus(formatDate(arg_dict['end_date'])))
+            print "->\t{}".format(site)
+            # print site + \
+            #     "&arrivalDate={}&departureDate={}" \
+            #     .format(
+            #             urllib.quote_plus(formatDate(arg_dict['start_date'])),
+            #             urllib.quote_plus(formatDate(arg_dict['end_date'])))
+            # send_mail(site)
     else:
-        print('Nothing Found')
+        print "nothing"
