@@ -3,7 +3,7 @@ import argparse
 import copy
 import requests
 
-from urlparse import parse_qs
+from urllib.parse import parse_qs
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     sites = findCampSites(arg_dict)
     if sites:
         for site in sites:
-            print "->\t{}".format(site)
+            print("->\t{}".format(site))
             # print site + \
             #     "&arrivalDate={}&departureDate={}" \
             #     .format(
@@ -157,4 +157,4 @@ if __name__ == "__main__":
             #             urllib.quote_plus(formatDate(arg_dict['end_date'])))
             # send_mail(site)
     else:
-        print "nothing"
+        print("nothing")
