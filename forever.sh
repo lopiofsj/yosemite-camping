@@ -18,6 +18,7 @@ do
 	done
 	# print the date so I know when the last request was made
 	date
-	# Wait a random interval between 0-2 minutes
-	sleep $(($RANDOM % 120))
+	echo '********************************************************************************'
+	# Wait a random interval between 0-3 minutes
+	sleep $(($RANDOM % 180))
 done
